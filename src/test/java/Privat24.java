@@ -1,6 +1,9 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
+
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class Privat24 {
@@ -23,16 +26,30 @@ public class Privat24 {
         $("[data-qa-node='numberreceiver']").sendKeys("4004159115449003");
         $("[data-qa-node='firstNamereceiver']").sendKeys("Vasil");
         $("[data-qa-node='lastNamereceiver']").sendKeys("Petrenko");
-        $("[data-qa-node='amount']").sendKeys("500");
 
+        //input sum
+        $("[data-qa-node='amount']").sendKeys("123");
+        $("[data-qa-node='currency']").click();
+        $("[data-qa-value='USD']").click();
 
-        //Dropdown menu
-       // $("[name='currency']").selectOptionByValue("USD");
+        //check input sender
+        $("[data-qa-node='numberdebitSource']").shouldHave(Condition.value("4552 3314 4813 8217"));
+        $("[data-qa-node='expiredebitSource']").shouldHave(Condition.value("05 / 24"));
+        $("[data-qa-node='cvvdebitSource']").shouldHave(Condition.value("926"));
+        $("[data-qa-node='firstNamedebitSource']").shouldHave(Condition.value("Vasil"));
+        $("[data-qa-node='lastNamedebitSource']").shouldHave(Condition.value("Petrenko"));
 
+        //check input receiver
+        $("[data-qa-node='numberreceiver']").shouldHave(Condition.value("4004 1591 1544 9003"));
+        $("[data-qa-node='firstNamereceiver']").shouldHave(Condition.value("Vasil"));
+        $("[data-qa-node='lastNamereceiver']").shouldHave(Condition.value("Petrenko"));
 
-      $("[type='submit']").pressEnter();
+        //check input sum
+        $("[data-qa-node='amount']").shouldHave(Condition.value("123"));
+        $("[data-qa-node ='currency']").shouldHave(Condition.text("USD"));
+
+        $("[type='submit']").pressEnter();
         Thread.sleep (10000);
-
 
 
     }
